@@ -1,0 +1,18 @@
+{
+  "name": "massTranslator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "authTest.js",
+  "dependencies": {
+    "@google-cloud/storage": "^5.13.1",
+    "@google-cloud/translate": "^6.2.7",
+    "axios": "^0.21.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
