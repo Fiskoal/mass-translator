@@ -2,13 +2,17 @@
   "name": "massTranslator",
   "version": "1.0.0",
   "description": "",
-  "main": "authTest.js",
+  "main": "server.js",
   "dependencies": {
     "@google-cloud/storage": "^5.13.1",
     "@google-cloud/translate": "^6.2.7",
-    "axios": "^0.21.1"
+    "axios": "^0.21.4",
+    "express": "^4.17.1",
+    "path": "^0.12.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

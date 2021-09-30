@@ -1,12 +1,17 @@
 const projectId = "mass-translator-323504";
 const location = "global";
 const { TranslationServiceClient } = require("@google-cloud/translate");
-const languageCodes = require("./languageCodes.json") 
+const languageCodes = require("./languageCodes.json");
 
 const translationClient = new TranslationServiceClient();
 
-module.exports = async function massTranslator(translateRequest) {
+// module.exports = async 
+async function massTranslator() {
   // declare these vars above the for-loop, to be manipulated inside of the for-loop and called again after it runs
+  const translateRequest = {
+    text: `First shalt thou take out the Holy Pin. Then shalt thou count to three, no more no less. Three shalt be the number thou shalt count, and the number of the counting shalt be three. Four shalt thou not count, neither count thou two, excepting that thou then proceed to three. Five is right out. Once the number three, being the third number, be reached, then lobbest thou thy Holy Hand Grenade of Antioch towards thou foe, who being naughty in my sight, shall snuff it.`,
+    language: "en",
+  };
 
   const initialText = translateRequest.text;
   const initialLanguage = translateRequest.language;
@@ -23,10 +28,9 @@ module.exports = async function massTranslator(translateRequest) {
   };
 
   // Get supported languages
-  const [languageResponse] = await translationClient.getSupportedLanguages(
-    request
-  )
-    .catch(err => console.log(err));
+  const [languageResponse] = await translationClient
+    .getSupportedLanguages(request)
+    .catch((err) => console.log(err));
 
   for (const language of languageResponse.languages) {
     if (language.supportSource && language.supportTarget) {
@@ -41,7 +45,7 @@ module.exports = async function massTranslator(translateRequest) {
     let randomNumber = Math.floor(Math.random() * languages.length);
 
     // if language called is not equal to current/last used language, do the stuff
-    if (languages[randomNumber] != sourceLanguageCode) {
+    if (languages[randomNumber] !== sourceLanguageCode && languages[randomNumber] !== initialLanguage) {
       // set our target language to the random language
       targetLanguageCode = languages[randomNumber];
 
@@ -66,9 +70,9 @@ module.exports = async function massTranslator(translateRequest) {
       // set the language we translated to, to the language we will be translating from
 
       console.log(
-        `${
-          i + 1
-        }/50 translations complete (${languageCodes[sourceLanguageCode]} >> ${languageCodes[targetLanguageCode]})`
+        `${i + 1}/50 translations complete (${
+          languageCodes[sourceLanguageCode]
+        } >> ${languageCodes[targetLanguageCode]})`
       );
 
       sourceLanguageCode = targetLanguageCode;
@@ -96,5 +100,6 @@ module.exports = async function massTranslator(translateRequest) {
   for (const translation of response.translations) {
     text = translation.translatedText;
   }
-  console.log("\nOriginal Text:", initialText, "\nTranslated Text:", text);
-}
+  console.log(`Original Text: ${initialText}, \nTranslated Text: ${text}`);
+};
+massTranslator();
